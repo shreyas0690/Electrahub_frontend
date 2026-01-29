@@ -29,7 +29,7 @@ export function Navbar() {
               <MapPin className="h-3.5 w-3.5" /> Store Locator
             </span>
             <span className="inline-flex items-center gap-1.5 opacity-90" data-testid="text-navbar-support">
-              <Phone className="h-3.5 w-3.5" /> 1800-123-4567
+              <Phone className="h-3.5 w-3.5" /> +91 8477819222
             </span>
           </div>
           <div className="flex items-center gap-2" data-testid="group-navbar-trust">

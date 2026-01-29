@@ -47,11 +47,13 @@ export function Footer() {
           <div>
             <h4 className="font-heading font-semibold text-lg mb-6">Contact</h4>
             <ul className="space-y-4 text-sm text-muted-foreground">
-              <li>1800-123-4567 (Mon-Sat, 9am-8pm)</li>
-              <li>support@electrahub.in</li>
+              <li data-testid="text-footer-phone">+91 8477819222</li>
+              <li data-testid="text-footer-email">saglobalventure01@gmail.com</li>
               <li>
-                <p className="mt-4 font-medium text-foreground">Coming Soon to Your City</p>
-                <p>Find our first store in Indiranagar, Bangalore.</p>
+                <p className="mt-4 font-medium text-foreground" data-testid="text-footer-address-title">Address</p>
+                <p data-testid="text-footer-address">
+                  Unnamed Road, Akbarpur, Uttar Pradesh, 203001, India
+                </p>
               </li>
             </ul>
           </div>

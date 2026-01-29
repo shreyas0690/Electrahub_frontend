@@ -276,16 +276,6 @@ export function FeaturedProducts() {
             Browse all collections
             <ArrowRight className="ml-2 h-4 w-4" />
           </Button>
-
-          <Button
-            variant="outline"
-            size="lg"
-            className="min-w-[240px] rounded-full"
-            data-testid="button-best-sellers-go-cart"
-            onClick={() => setLocation("/cart")}
-          >
-            Go to cart
-          </Button>
         </div>
       </div>
     </section>

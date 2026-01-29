@@ -186,28 +186,6 @@ export function Hero() {
                           {slide.description}
                         </p>
 
-                        <div className="flex flex-col sm:flex-row gap-4">
-                          <Button
-                            size="lg"
-                            className={cn(
-                              "text-base px-8 h-14 rounded-full font-bold shadow-[0_0_20px_rgba(0,0,0,0.3)] transition-transform hover:scale-105",
-                              slide.theme === "orange" && "bg-orange-600 hover:bg-orange-700 text-white",
-                              slide.theme === "blue" && "bg-blue-600 hover:bg-blue-700 text-white",
-                              slide.theme === "purple" && "bg-purple-600 hover:bg-purple-700 text-white"
-                            )}
-                            data-testid={`button-hero-primary-${slide.id}`}
-                          >
-                            {slide.cta} <ArrowRight className="ml-2 h-5 w-5" />
-                          </Button>
-                          <Button
-                            size="lg"
-                            variant="outline"
-                            className="text-base h-14 rounded-full border-white/30 text-white hover:bg-white/10 backdrop-blur-sm"
-                            data-testid={`button-hero-secondary-${slide.id}`}
-                          >
-                            <PlayCircle className="mr-2 h-5 w-5" /> {slide.secondaryCta}
-                          </Button>
-                        </div>
                       </motion.div>
                     )}
                   </AnimatePresence>

@@ -10,8 +10,8 @@ export function Navbar() {
   const [, setLocation] = useLocation();
   const [isOpen, setIsOpen] = useState(false);
 
-  const items = useCartStore((s) => s.items);
-  const cartCount = useMemo(() => items.reduce((sum, i) => sum + i.qty, 0), [items]);
+  const items = useCartStore((s: { items: { qty: number }[] }) => s.items);
+  const cartCount = useMemo(() => items.reduce((sum: number, i: { qty: number }) => sum + i.qty, 0), [items]);
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">

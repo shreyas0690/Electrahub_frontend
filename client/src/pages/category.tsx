@@ -169,7 +169,7 @@ function useCategorySlug() {
 
 export default function CategoryPage() {
   const [, setLocation] = useLocation();
-  const addItem = useCartStore((s) => s.addItem);
+  const addItem = useCartStore((s: { addItem: any }) => s.addItem);
   const slug = useCategorySlug();
   const meta = categoryMeta[slug] ?? categoryMeta.tvs;
   const allProducts = productsBySlug[slug] ?? productsBySlug.tvs;

@@ -262,7 +262,7 @@ export default function ProductPage() {
   const id = useProductId();
   const [qty, setQty] = useState(1);
   const [, setLocation] = useLocation();
-  const addItem = useCartStore((s) => s.addItem);
+  const addItem = useCartStore((s: { addItem: any }) => s.addItem);
 
   const product = productDetails[id] ?? productDetails["tv-55-webos"];
   const [activeIndex, setActiveIndex] = useState(0);

@@ -13,12 +13,12 @@ export default function CartPage() {
   const [, setLocation] = useLocation();
   const { toast } = useToast();
 
-  const items = useCartStore((s) => s.items);
-  const removeItem = useCartStore((s) => s.removeItem);
-  const setQty = useCartStore((s) => s.setQty);
-  const clear = useCartStore((s) => s.clear);
+  const items = useCartStore((s: { items: any[] }) => s.items);
+  const removeItem = useCartStore((s: { removeItem: (id: string) => void }) => s.removeItem);
+  const setQty = useCartStore((s: { setQty: (id: string, qty: number) => void }) => s.setQty);
+  const clear = useCartStore((s: { clear: () => void }) => s.clear);
 
-  const subtotal = useCartStore((s) => s.subtotal)();
+  const subtotal = useCartStore((s: { subtotal: () => number }) => s.subtotal)();
   const delivery = useMemo(() => (subtotal > 0 ? 0 : 0), [subtotal]);
   const total = subtotal + delivery;
 
@@ -76,7 +76,7 @@ export default function CartPage() {
                 </div>
               ) : (
                 <div className="space-y-4" data-testid="list-cart-items">
-                  {items.map((it) => (
+                  {items.map((it: any) => (
                     <div
                       key={it.id}
                       className="flex flex-col sm:flex-row sm:items-center gap-4 rounded-2xl border bg-card p-4"
@@ -186,10 +186,7 @@ export default function CartPage() {
                   data-testid="button-cart-checkout"
                   disabled={items.length === 0}
                   onClick={() => {
-                    toast({
-                      title: "Checkout (prototype)",
-                      description: "Checkout flow will be connected later. Your cart is ready!",
-                    });
+                    setLocation("/checkout");
                   }}
                 >
                   Proceed to Checkout

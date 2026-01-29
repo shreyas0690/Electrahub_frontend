@@ -21,7 +21,7 @@ type CartState = {
   subtotal: () => number;
 };
 
-export const useCartStore = create<CartState>((set, get) => ({
+export const useCartStore = create<CartState>((set: (fn: (s: CartState) => Partial<CartState> | CartState) => void, get: () => CartState) => ({
   items: [],
   addItem: (item, qty = 1) =>
     set((state) => {
@@ -40,6 +40,6 @@ export const useCartStore = create<CartState>((set, get) => ({
         .map((i) => (i.id === id ? { ...i, qty: Math.max(1, Math.min(10, qty)) } : i))
         .filter((i) => i.qty > 0),
     })),
-  clear: () => set({ items: [] }),
+  clear: () => set(() => ({ items: [] })),
   subtotal: () => get().items.reduce((sum, i) => sum + parsePrice(i.price) * i.qty, 0),
 }));

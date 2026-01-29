@@ -122,29 +122,29 @@ export function Footer() {
                   <h4 className="font-heading font-semibold text-base" data-testid="text-footer-links-support">Support</h4>
                   <ul className="mt-4 space-y-3 text-sm text-muted-foreground" data-testid="list-footer-support">
                     <li>
-                      <Link href="/track" className="hover:text-primary transition-colors" data-testid="link-footer-track">
+                      <a href="#" className="hover:text-primary transition-colors" data-testid="link-footer-track">
                         Track Order
-                      </Link>
+                      </a>
                     </li>
                     <li>
-                      <Link href="/warranty" className="hover:text-primary transition-colors" data-testid="link-footer-warranty">
+                      <a href="#" className="hover:text-primary transition-colors" data-testid="link-footer-warranty">
                         Warranty Registration
-                      </Link>
+                      </a>
                     </li>
                     <li>
-                      <Link href="/installation" className="hover:text-primary transition-colors" data-testid="link-footer-installation">
+                      <a href="#" className="hover:text-primary transition-colors" data-testid="link-footer-installation">
                         Installation Guide
-                      </Link>
+                      </a>
                     </li>
                     <li>
-                      <Link href="/contact" className="hover:text-primary transition-colors" data-testid="link-footer-contact">
+                      <a href="#" className="hover:text-primary transition-colors" data-testid="link-footer-contact">
                         Contact Us
-                      </Link>
+                      </a>
                     </li>
                   </ul>
                 </div>
 
-                <div className="hidden sm:block">
+                <div className="sm:block">
                   <h4 className="font-heading font-semibold text-base" data-testid="text-footer-links-company">Company</h4>
                   <ul className="mt-4 space-y-3 text-sm text-muted-foreground" data-testid="list-footer-company">
                     <li>

@@ -55,11 +55,13 @@ export function Categories() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
           {categories.map((category) => (
-            <motion.div
+            <motion.button
               key={category.id}
               whileHover={{ y: -5 }}
-              className="group relative overflow-hidden rounded-2xl bg-white shadow-sm border hover:shadow-xl transition-all duration-300 flex flex-col h-full"
+              className="group relative overflow-hidden rounded-2xl bg-white shadow-sm border hover:shadow-xl transition-all duration-300 flex flex-col h-full text-left"
               data-testid={`card-category-${category.id}`}
+              onClick={() => setLocation(`/category?c=${category.id}`)}
+              type="button"
             >
               <div className="p-8 md:p-10 flex flex-col h-full relative z-10">
                 <div className="mb-4">
@@ -76,14 +78,13 @@ export function Categories() {
                     {category.description}
                   </p>
 
-                  <button
+                  <div
                     className="flex items-center text-sm font-semibold text-primary"
                     data-testid={`button-explore-collection-${category.id}`}
-                    onClick={() => setLocation(`/category?c=${category.id}`)}
                   >
                     Explore Collection
                     <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                  </button>
+                  </div>
                 </div>
 
                 <div className="mt-auto relative h-48 md:h-56 w-full flex justify-end items-end">
@@ -95,7 +96,7 @@ export function Categories() {
                   />
                 </div>
               </div>
-            </motion.div>
+            </motion.button>
           ))}
         </div>
       </div>

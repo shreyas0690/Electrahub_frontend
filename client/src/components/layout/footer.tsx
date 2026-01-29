@@ -27,20 +27,20 @@ export function Footer() {
           <div>
             <h4 className="font-heading font-semibold text-lg mb-6">Shop</h4>
             <ul className="space-y-4 text-sm text-muted-foreground">
-              <li><Link href="/tvs"><a className="hover:text-primary transition-colors">Smart TVs</a></Link></li>
-              <li><Link href="/soundbars"><a className="hover:text-primary transition-colors">Soundbars</a></Link></li>
-              <li><Link href="/accessories"><a className="hover:text-primary transition-colors">Accessories</a></Link></li>
-              <li><Link href="/offers"><a className="hover:text-primary transition-colors">New Arrivals</a></Link></li>
+              <li><Link href="/category?c=tvs" className="hover:text-primary transition-colors" data-testid="link-footer-tvs">Smart TVs</Link></li>
+              <li><Link href="/category?c=soundbars" className="hover:text-primary transition-colors" data-testid="link-footer-soundbars">Soundbars</Link></li>
+              <li><Link href="/category?c=appliances" className="hover:text-primary transition-colors" data-testid="link-footer-washing">Washing Machines</Link></li>
+              <li><Link href="/category?c=business" className="hover:text-primary transition-colors" data-testid="link-footer-standees">Digital Standees</Link></li>
             </ul>
           </div>
 
           <div>
             <h4 className="font-heading font-semibold text-lg mb-6">Support</h4>
             <ul className="space-y-4 text-sm text-muted-foreground">
-              <li><Link href="/track"><a className="hover:text-primary transition-colors">Track Order</a></Link></li>
-              <li><Link href="/warranty"><a className="hover:text-primary transition-colors">Warranty Registration</a></Link></li>
-              <li><Link href="/installation"><a className="hover:text-primary transition-colors">Installation Guide</a></Link></li>
-              <li><Link href="/contact"><a className="hover:text-primary transition-colors">Contact Us</a></Link></li>
+              <li><Link href="/track" className="hover:text-primary transition-colors" data-testid="link-footer-track">Track Order</Link></li>
+              <li><Link href="/warranty" className="hover:text-primary transition-colors" data-testid="link-footer-warranty">Warranty Registration</Link></li>
+              <li><Link href="/installation" className="hover:text-primary transition-colors" data-testid="link-footer-installation">Installation Guide</Link></li>
+              <li><Link href="/contact" className="hover:text-primary transition-colors" data-testid="link-footer-contact">Contact Us</Link></li>
             </ul>
           </div>
 

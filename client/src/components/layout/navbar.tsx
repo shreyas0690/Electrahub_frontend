@@ -36,8 +36,8 @@ export function Navbar() {
             <SheetContent side="left">
               <nav className="flex flex-col gap-4 mt-8">
                 <Link href="/" onClick={() => setIsOpen(false)} className="text-lg font-medium">Home</Link>
-                <Link href="/tvs" onClick={() => setIsOpen(false)} className="text-lg font-medium">Smart TVs</Link>
-                <Link href="/soundbars" onClick={() => setIsOpen(false)} className="text-lg font-medium">Soundbars</Link>
+                <Link href="/category?c=tvs" onClick={() => setIsOpen(false)} className="text-lg font-medium" data-testid="link-mobile-tvs">Smart TVs</Link>
+                <Link href="/category?c=soundbars" onClick={() => setIsOpen(false)} className="text-lg font-medium" data-testid="link-mobile-soundbars">Soundbars</Link>
                 <Link href="/offers" onClick={() => setIsOpen(false)} className="text-lg font-medium text-primary">Festive Offers</Link>
               </nav>
             </SheetContent>
@@ -45,18 +45,16 @@ export function Navbar() {
         </div>
 
         {/* Logo */}
-        <Link href="/">
-          <a className="flex items-center gap-2">
-            <span className="text-2xl font-bold font-heading tracking-tight text-primary">ElectraHub</span>
-          </a>
+        <Link href="/" className="flex items-center gap-2" data-testid="link-home-logo">
+          <span className="text-2xl font-bold font-heading tracking-tight text-primary">ElectraHub</span>
         </Link>
 
         {/* Desktop Nav */}
         <nav className="hidden md:flex items-center gap-8 font-medium text-sm">
-          <Link href="/"><a className="hover:text-primary transition-colors">Home</a></Link>
-          <Link href="/tvs"><a className="hover:text-primary transition-colors">Smart TVs</a></Link>
-          <Link href="/soundbars"><a className="hover:text-primary transition-colors">Soundbars</a></Link>
-          <Link href="/offers"><a className="hover:text-primary transition-colors text-primary font-semibold">Offers</a></Link>
+          <Link href="/" className="hover:text-primary transition-colors" data-testid="link-nav-home">Home</Link>
+          <Link href="/category?c=tvs" className="hover:text-primary transition-colors" data-testid="link-nav-tvs">Smart TVs</Link>
+          <Link href="/category?c=soundbars" className="hover:text-primary transition-colors" data-testid="link-nav-soundbars">Soundbars</Link>
+          <Link href="/offers" className="hover:text-primary transition-colors text-primary font-semibold" data-testid="link-nav-offers">Offers</Link>
         </nav>
 
         {/* Search */}
@@ -74,10 +72,16 @@ export function Navbar() {
           <Button variant="ghost" size="icon" className="md:hidden">
             <Search className="h-5 w-5" />
           </Button>
-          <Button variant="ghost" size="icon">
+          <Button variant="ghost" size="icon" data-testid="button-account">
             <User className="h-5 w-5" />
           </Button>
-          <Button variant="ghost" size="icon" className="relative">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="relative"
+            data-testid="button-cart"
+            onClick={() => (window.location.href = "/cart")}
+          >
             <ShoppingCart className="h-5 w-5" />
             <span className="absolute top-1 right-1 h-2 w-2 rounded-full bg-primary ring-2 ring-background" />
           </Button>

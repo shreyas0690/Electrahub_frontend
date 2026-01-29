@@ -424,7 +424,16 @@ export default function ProductPage() {
                   >
                     Add to Cart
                   </Button>
-                  <Button size="lg" variant="outline" className="h-12" data-testid="button-check-emi" onClick={() => {}}>
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="h-12"
+                    data-testid="button-check-emi"
+                    onClick={() => {
+                      const el = document.getElementById("emi-plans");
+                      el?.scrollIntoView({ behavior: "smooth", block: "start" });
+                    }}
+                  >
                     Check EMI Options
                   </Button>
                 </div>
@@ -453,7 +462,7 @@ export default function ProductPage() {
 
                 <Separator className="my-8" />
 
-                <h2 className="text-lg font-heading font-bold" data-testid="text-emi-title">
+                <h2 className="text-lg font-heading font-bold" data-testid="text-emi-title" id="emi-plans">
                   Installment Plans
                 </h2>
                 <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-3">

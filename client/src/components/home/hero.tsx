@@ -19,6 +19,7 @@ import heroCricket from "@/assets/hero-cricket.png";
 import heroGaming from "@/assets/hero-gaming.png";
 import heroLivingroom from "@/assets/hero-livingroom.png";
 import heroGradient from "@/assets/hero-gradient.png";
+import heroWholeHome from "@/assets/hero-wholehome.png";
 
 const slides = [
   {
@@ -71,7 +72,7 @@ const slides = [
   },
   {
     id: 4,
-    image: heroGradient,
+    image: heroWholeHome,
     title: "Upgrade the Whole Home",
     highlight: "Whole Home",
     description: "From washing machines to digital standees—smart upgrades that fit Indian spaces and family routines.",
@@ -153,28 +154,6 @@ export function Hero() {
                           {slide.badge}
                         </div>
 
-                        <div className="mt-5 flex flex-col sm:flex-row gap-4" data-testid={`group-hero-ctas-${slide.id}`}>
-                          <Button
-                            size="lg"
-                            className={cn(
-                              "text-base px-8 h-14 rounded-full font-bold shadow-[0_0_20px_rgba(0,0,0,0.3)] transition-transform hover:scale-105",
-                              slide.theme === "orange" && "bg-orange-600 hover:bg-orange-700 text-white",
-                              slide.theme === "blue" && "bg-blue-600 hover:bg-blue-700 text-white",
-                              slide.theme === "purple" && "bg-purple-600 hover:bg-purple-700 text-white"
-                            )}
-                            data-testid={`button-hero-primary-${slide.id}`}
-                          >
-                            {slide.cta} <ArrowRight className="ml-2 h-5 w-5" />
-                          </Button>
-                          <Button
-                            size="lg"
-                            variant="outline"
-                            className="text-base h-14 rounded-full border-white/30 text-white hover:bg-white/10 backdrop-blur-sm"
-                            data-testid={`button-hero-secondary-${slide.id}`}
-                          >
-                            <PlayCircle className="mr-2 h-5 w-5" /> {slide.secondaryCta}
-                          </Button>
-                        </div>
 
                         <div className="grid grid-cols-3 gap-2 mb-5" data-testid={`grid-hero-stats-${slide.id}`}>
                           {slide.stats.map((s, i) => (
@@ -208,6 +187,29 @@ export function Hero() {
                         <p className="text-xl text-gray-200 leading-relaxed mb-8 max-w-xl">
                           {slide.description}
                         </p>
+
+                        <div className="flex flex-col sm:flex-row gap-4" data-testid={`group-hero-ctas-${slide.id}`}>
+                          <Button
+                            size="lg"
+                            className={cn(
+                              "text-base px-8 h-14 rounded-full font-bold shadow-[0_0_20px_rgba(0,0,0,0.3)] transition-transform hover:scale-105",
+                              slide.theme === "orange" && "bg-orange-600 hover:bg-orange-700 text-white",
+                              slide.theme === "blue" && "bg-blue-600 hover:bg-blue-700 text-white",
+                              slide.theme === "purple" && "bg-purple-600 hover:bg-purple-700 text-white"
+                            )}
+                            data-testid={`button-hero-primary-${slide.id}`}
+                          >
+                            {slide.cta} <ArrowRight className="ml-2 h-5 w-5" />
+                          </Button>
+                          <Button
+                            size="lg"
+                            variant="outline"
+                            className="text-base h-14 rounded-full border-white/30 text-white hover:bg-white/10 backdrop-blur-sm"
+                            data-testid={`button-hero-secondary-${slide.id}`}
+                          >
+                            <PlayCircle className="mr-2 h-5 w-5" /> {slide.secondaryCta}
+                          </Button>
+                        </div>
 
                       </motion.div>
                     )}

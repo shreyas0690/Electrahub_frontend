@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useLocation, useSearch } from "wouter";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
@@ -7,6 +7,16 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { ShoppingCart, Star, SlidersHorizontal } from "lucide-react";
+
+import imgTv55 from "@/assets/product-tv-55.jpg";
+import imgTv43 from "@/assets/product-tv-43.jpg";
+import imgTv65 from "@/assets/product-tv-65.jpg";
+import imgSb200 from "@/assets/product-soundbar-200.jpg";
+import imgSb450 from "@/assets/product-soundbar-450.jpg";
+import imgWm7 from "@/assets/product-wm-7kg.jpg";
+import imgWm9 from "@/assets/product-wm-9kg.jpg";
+import imgDs43 from "@/assets/product-standee-43.jpg";
+import imgDs55 from "@/assets/product-standee-55.jpg";
 
 const categoryMeta: Record<string, { title: string; subtitle: string }> = {
   tvs: {
@@ -27,19 +37,19 @@ const categoryMeta: Record<string, { title: string; subtitle: string }> = {
   },
 };
 
-const productsBySlug: Record<
-  string,
-  Array<{
-    id: string;
-    name: string;
-    price: string;
-    mrp: string;
-    rating: number;
-    reviews: number;
-    emi?: string;
-    tag?: string;
-  }>
-> = {
+type Product = {
+  id: string;
+  name: string;
+  price: string;
+  mrp: string;
+  rating: number;
+  reviews: number;
+  emi?: string;
+  tag?: string;
+  image: string;
+};
+
+const productsBySlug: Record<string, Product[]> = {
   tvs: [
     {
       id: "tv-55-webos",
@@ -50,6 +60,7 @@ const productsBySlug: Record<
       reviews: 1240,
       emi: "₹1,945/mo",
       tag: "Best Seller",
+      image: imgTv55,
     },
     {
       id: "tv-43-fhd",
@@ -60,6 +71,7 @@ const productsBySlug: Record<
       reviews: 850,
       emi: "₹1,110/mo",
       tag: "Budget Pick",
+      image: imgTv43,
     },
     {
       id: "tv-65-qled",
@@ -70,6 +82,7 @@ const productsBySlug: Record<
       reviews: 320,
       emi: "₹3,055/mo",
       tag: "New Arrival",
+      image: imgTv65,
     },
   ],
   soundbars: [
@@ -82,6 +95,7 @@ const productsBySlug: Record<
       reviews: 450,
       emi: "₹500/mo",
       tag: "Great Value",
+      image: imgSb200,
     },
     {
       id: "sb-450",
@@ -92,6 +106,7 @@ const productsBySlug: Record<
       reviews: 210,
       emi: "₹835/mo",
       tag: "Dolby Audio",
+      image: imgSb450,
     },
   ],
   appliances: [
@@ -104,6 +119,7 @@ const productsBySlug: Record<
       reviews: 190,
       emi: "₹1,330/mo",
       tag: "Hygiene Steam",
+      image: imgWm7,
     },
     {
       id: "wm-9kg",
@@ -114,6 +130,7 @@ const productsBySlug: Record<
       reviews: 120,
       emi: "₹1,780/mo",
       tag: "AI Wash",
+      image: imgWm9,
     },
   ],
   business: [
@@ -125,6 +142,7 @@ const productsBySlug: Record<
       rating: 4.8,
       reviews: 60,
       tag: "Business Pro",
+      image: imgDs43,
     },
     {
       id: "ds-55",
@@ -134,6 +152,7 @@ const productsBySlug: Record<
       rating: 4.7,
       reviews: 38,
       tag: "High Brightness",
+      image: imgDs55,
     },
   ],
 };
@@ -148,10 +167,15 @@ export default function CategoryPage() {
   const [, setLocation] = useLocation();
   const slug = useCategorySlug();
   const meta = categoryMeta[slug] ?? categoryMeta.tvs;
-  const products = productsBySlug[slug] ?? productsBySlug.tvs;
+  const allProducts = productsBySlug[slug] ?? productsBySlug.tvs;
 
-  const [query, setQuery] = useMemo(() => ["", () => {}] as const, []);
-  // Note: keep simple mockup; no complex state needed for now
+  const [query, setQuery] = useState("");
+
+  const products = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    if (!q) return allProducts;
+    return allProducts.filter((p) => p.name.toLowerCase().includes(q));
+  }, [allProducts, query]);
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -178,7 +202,7 @@ export default function CategoryPage() {
                     placeholder="Search in this collection..."
                     className="w-full sm:w-[320px]"
                     data-testid="input-category-search"
-                    onChange={() => {}}
+                    onChange={(e) => setQuery(e.target.value)}
                     value={query}
                   />
                 </div>
@@ -200,6 +224,16 @@ export default function CategoryPage() {
                   className="overflow-hidden rounded-2xl border bg-card shadow-sm hover:shadow-md transition-shadow"
                   data-testid={`card-product-${p.id}`}
                 >
+                  <div className="aspect-[4/3] bg-muted/20 overflow-hidden">
+                    <img
+                      src={p.image}
+                      alt={p.name}
+                      className="h-full w-full object-cover"
+                      loading="lazy"
+                      data-testid={`img-product-${p.id}`}
+                    />
+                  </div>
+
                   <div className="p-6">
                     <div className="flex items-start justify-between gap-4">
                       <div className="min-w-0">
@@ -208,7 +242,10 @@ export default function CategoryPage() {
                             {p.tag}
                           </Badge>
                         ) : null}
-                        <h3 className="font-heading font-bold text-lg leading-snug line-clamp-2" data-testid={`text-product-name-${p.id}`}>
+                        <h3
+                          className="font-heading font-bold text-lg leading-snug line-clamp-2"
+                          data-testid={`text-product-name-${p.id}`}
+                        >
                           {p.name}
                         </h3>
                         <div className="mt-2 flex items-center gap-2 text-sm" data-testid={`text-product-rating-${p.id}`}>
@@ -222,7 +259,7 @@ export default function CategoryPage() {
                         size="icon"
                         className="rounded-full h-10 w-10 shrink-0"
                         data-testid={`button-add-cart-${p.id}`}
-                        onClick={() => {}}
+                        onClick={() => setLocation("/cart")}
                       >
                         <ShoppingCart className="h-4 w-4" />
                       </Button>
@@ -237,7 +274,10 @@ export default function CategoryPage() {
                           {p.price}
                         </div>
                         {p.emi ? (
-                          <div className="mt-2 text-xs font-medium text-green-700 bg-green-50 inline-flex px-2 py-1 rounded" data-testid={`text-product-emi-${p.id}`}>
+                          <div
+                            className="mt-2 text-xs font-medium text-green-700 bg-green-50 inline-flex px-2 py-1 rounded"
+                            data-testid={`text-product-emi-${p.id}`}
+                          >
                             EMI starts at {p.emi}
                           </div>
                         ) : null}
@@ -256,6 +296,12 @@ export default function CategoryPage() {
                 </Card>
               ))}
             </div>
+
+            {products.length === 0 ? (
+              <div className="mt-10 text-center text-muted-foreground" data-testid="text-category-empty">
+                No products found for “{query}”.
+              </div>
+            ) : null}
           </div>
         </section>
       </main>

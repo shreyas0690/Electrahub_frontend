@@ -260,8 +260,17 @@ export function FeaturedProducts() {
           ))}
         </div>
         
-        <div className="mt-12 text-center">
-          <Button variant="outline" size="lg" className="min-w-[200px]">View All Products</Button>
+        <div className="mt-12 text-center" data-testid="row-best-sellers-cta">
+          <Button
+            variant="outline"
+            size="lg"
+            className="min-w-[220px] rounded-full"
+            data-testid="button-best-sellers-view-all"
+            onClick={() => setLocation("/category?c=tvs")}
+          >
+            View all collections
+            <ArrowRight className="ml-2 h-4 w-4" />
+          </Button>
         </div>
       </div>
     </section>

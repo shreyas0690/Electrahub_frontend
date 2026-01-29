@@ -39,7 +39,18 @@ export function Categories() {
   return (
     <section className="py-16 bg-muted/30">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-10">
+        <div className="mx-auto mb-10 max-w-2xl text-center">
+          <div
+            className="mx-auto mb-4 inline-flex flex-wrap items-center justify-center gap-2 rounded-full border bg-background/70 px-3 py-1.5 text-xs text-muted-foreground shadow-sm backdrop-blur"
+            data-testid="pill-categories-trust"
+          >
+            <span className="font-medium text-foreground" data-testid="text-categories-pill-left">No-cost EMI</span>
+            <span aria-hidden className="opacity-60">•</span>
+            <span data-testid="text-categories-pill-mid">Free Installation</span>
+            <span aria-hidden className="opacity-60">•</span>
+            <span data-testid="text-categories-pill-right">2-year Warranty</span>
+          </div>
+
           <h2
             className="text-3xl font-heading font-bold mb-2"
             data-testid="text-categories-title"

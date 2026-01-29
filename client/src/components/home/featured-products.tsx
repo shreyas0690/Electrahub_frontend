@@ -260,16 +260,25 @@ export function FeaturedProducts() {
           ))}
         </div>
         
-        <div className="mt-12 text-center" data-testid="row-best-sellers-cta">
+        <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-3" data-testid="row-best-sellers-cta">
           <Button
-            variant="outline"
             size="lg"
-            className="min-w-[220px] rounded-full"
+            className="min-w-[240px] rounded-full bg-gradient-to-r from-primary to-orange-500 text-white shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/25"
             data-testid="button-best-sellers-view-all"
             onClick={() => setLocation("/category?c=tvs")}
           >
-            View all collections
+            Browse all collections
             <ArrowRight className="ml-2 h-4 w-4" />
+          </Button>
+
+          <Button
+            variant="outline"
+            size="lg"
+            className="min-w-[240px] rounded-full"
+            data-testid="button-best-sellers-go-cart"
+            onClick={() => setLocation("/cart")}
+          >
+            Go to cart
           </Button>
         </div>
       </div>

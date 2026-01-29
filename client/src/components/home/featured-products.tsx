@@ -222,7 +222,7 @@ export function FeaturedProducts() {
           {featured.slice(0, 8).map((product: FeaturedProduct) => (
             <div key={product.id} className="group flex flex-col bg-card border rounded-xl overflow-hidden hover:shadow-lg hover:border-primary/20 transition-all duration-300">
               <div className="relative aspect-[4/3] bg-muted/20 p-6 flex items-center justify-center overflow-hidden">
-                <Badge className="absolute top-3 left-3 bg-orange-500 hover:bg-orange-600">{product.tag}</Badge>
+                <Badge className="absolute top-3 left-3 bg-orange-500 hover:bg-orange-600 z-10" data-testid={`badge-best-seller-tag-${product.id}`}>{product.tag}</Badge>
                 <img 
                   src={product.image} 
                   alt={product.name}

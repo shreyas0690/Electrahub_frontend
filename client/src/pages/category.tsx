@@ -6,6 +6,9 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Slider } from "@/components/ui/slider";
 import { ShoppingCart, Star, SlidersHorizontal } from "lucide-react";
 
 import imgTv55 from "@/assets/product-tv-55.png";
@@ -170,12 +173,40 @@ export default function CategoryPage() {
   const allProducts = productsBySlug[slug] ?? productsBySlug.tvs;
 
   const [query, setQuery] = useState("");
+  const [isFiltersOpen, setIsFiltersOpen] = useState(false);
+
+  const parsePrice = (v: string) => Number(v.replace(/[^0-9]/g, "")) || 0;
+  const priceFloor = useMemo(() => Math.min(...allProducts.map((p) => parsePrice(p.price))), [allProducts]);
+  const priceCeil = useMemo(() => Math.max(...allProducts.map((p) => parsePrice(p.price))), [allProducts]);
+
+  const [filters, setFilters] = useState<{ priceMax: number; ratingMin: number; onlyEmi: boolean }>(() => ({
+    priceMax: Infinity,
+    ratingMin: 0,
+    onlyEmi: false,
+  }));
+
+  const effectivePriceMax = Number.isFinite(filters.priceMax) ? filters.priceMax : priceCeil;
 
   const products = useMemo(() => {
     const q = query.trim().toLowerCase();
-    if (!q) return allProducts;
-    return allProducts.filter((p) => p.name.toLowerCase().includes(q));
-  }, [allProducts, query]);
+
+    return allProducts
+      .filter((p) => {
+        if (!q) return true;
+        return p.name.toLowerCase().includes(q);
+      })
+      .filter((p) => {
+        const price = parsePrice(p.price);
+        return price <= effectivePriceMax;
+      })
+      .filter((p) => {
+        return p.rating >= filters.ratingMin;
+      })
+      .filter((p) => {
+        if (!filters.onlyEmi) return true;
+        return Boolean(p.emi);
+      });
+  }, [allProducts, query, filters, priceCeil]);
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -200,16 +231,124 @@ export default function CategoryPage() {
                 <div className="relative">
                   <Input
                     placeholder="Search in this collection..."
-                    className="w-full sm:w-[320px]"
+                    className="w-full sm:w-[340px] h-11 rounded-full pl-11 bg-background/80 backdrop-blur border-muted-foreground/20 shadow-sm focus-visible:ring-2 focus-visible:ring-primary/30"
                     data-testid="input-category-search"
                     onChange={(e) => setQuery(e.target.value)}
                     value={query}
                   />
+                  <div className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground" data-testid="icon-category-search">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                      <path d="M21 21l-4.3-4.3m1.8-5.2a7 7 0 11-14 0 7 7 0 0114 0z" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                    </svg>
+                  </div>
                 </div>
-                <Button variant="outline" className="gap-2" data-testid="button-category-filter" onClick={() => {}}>
-                  <SlidersHorizontal className="h-4 w-4" />
-                  Filters
-                </Button>
+
+                <Popover open={isFiltersOpen} onOpenChange={setIsFiltersOpen}>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className="h-11 rounded-full gap-2 border-muted-foreground/20 bg-background/80 backdrop-blur shadow-sm hover:bg-background"
+                      data-testid="button-category-filter"
+                    >
+                      <SlidersHorizontal className="h-4 w-4" />
+                      Filters
+                      {(effectivePriceMax < priceCeil || filters.ratingMin > 0 || filters.onlyEmi) ? (
+                        <span
+                          className="ml-1 inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-primary/10 px-1.5 text-xs font-semibold text-primary"
+                          data-testid="badge-filters-active"
+                        >
+                          1
+                        </span>
+                      ) : null}
+                    </Button>
+                  </PopoverTrigger>
+
+                  <PopoverContent align="end" className="w-[340px] p-4" data-testid="panel-category-filters">
+                    <div className="flex items-center justify-between gap-3">
+                      <div>
+                        <div className="font-heading font-bold" data-testid="text-filters-title">
+                          Filters
+                        </div>
+                        <div className="text-xs text-muted-foreground" data-testid="text-filters-subtitle">
+                          Refine products in this collection
+                        </div>
+                      </div>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="rounded-full"
+                        data-testid="button-filters-reset"
+                        onClick={() => setFilters({ priceMax: Infinity, ratingMin: 0, onlyEmi: false })}
+                      >
+                        Reset
+                      </Button>
+                    </div>
+
+                    <div className="mt-4 space-y-4">
+                      <div className="rounded-xl border bg-muted/20 p-4" data-testid="section-filter-price">
+                        <div className="flex items-center justify-between gap-3">
+                          <div className="text-sm font-semibold" data-testid="text-filter-price-title">
+                            Max Price
+                          </div>
+                          <div className="text-sm font-semibold" data-testid="text-filter-price-value">
+                            ₹{Math.round(effectivePriceMax).toLocaleString("en-IN")}
+                          </div>
+                        </div>
+                        <div className="mt-3" data-testid="slider-filter-price">
+                          <Slider
+                            value={[Math.min(Math.max(effectivePriceMax, priceFloor), priceCeil)]}
+                            min={priceFloor}
+                            max={priceCeil}
+                            step={500}
+                            onValueChange={(v) => setFilters((s) => ({ ...s, priceMax: v[0] }))}
+                          />
+                        </div>
+                        <div className="mt-2 flex items-center justify-between text-xs text-muted-foreground" data-testid="text-filter-price-range">
+                          <span>₹{priceFloor.toLocaleString("en-IN")}</span>
+                          <span>₹{priceCeil.toLocaleString("en-IN")}</span>
+                        </div>
+                      </div>
+
+                      <div className="rounded-xl border bg-muted/20 p-4" data-testid="section-filter-rating">
+                        <div className="flex items-center justify-between gap-3">
+                          <div className="text-sm font-semibold" data-testid="text-filter-rating-title">
+                            Minimum Rating
+                          </div>
+                          <div className="text-sm font-semibold" data-testid="text-filter-rating-value">
+                            {filters.ratingMin.toFixed(1)}+
+                          </div>
+                        </div>
+                        <div className="mt-3" data-testid="slider-filter-rating">
+                          <Slider
+                            value={[filters.ratingMin]}
+                            min={0}
+                            max={5}
+                            step={0.1}
+                            onValueChange={(v) => setFilters((s) => ({ ...s, ratingMin: v[0] }))}
+                          />
+                        </div>
+                      </div>
+
+                      <div className="flex items-center justify-between rounded-xl border bg-muted/20 p-4" data-testid="section-filter-emi">
+                        <div>
+                          <div className="text-sm font-semibold" data-testid="text-filter-emi-title">
+                            EMI Available
+                          </div>
+                          <div className="text-xs text-muted-foreground" data-testid="text-filter-emi-subtitle">
+                            Show products with monthly plans
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Checkbox
+                            checked={filters.onlyEmi}
+                            onCheckedChange={(v) => setFilters((s) => ({ ...s, onlyEmi: Boolean(v) }))}
+                            data-testid="checkbox-filter-emi"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </PopoverContent>
+                </Popover>
               </div>
             </div>
           </div>

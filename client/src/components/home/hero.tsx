@@ -140,7 +140,7 @@ export function Hero() {
                         exit={{ opacity: 0, y: -20 }}
                         transition={{ duration: 0.5, delay: 0.2 }}
                       >
-                         <div
+                        <div
                           className={cn(
                             "inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest mb-4 backdrop-blur-md border",
                             slide.theme === "orange" && "bg-orange-500/20 text-orange-200 border-orange-500/30",
@@ -151,6 +151,29 @@ export function Hero() {
                         >
                           <span className="w-2 h-2 rounded-full bg-current animate-pulse" />
                           {slide.badge}
+                        </div>
+
+                        <div className="mt-5 flex flex-col sm:flex-row gap-4" data-testid={`group-hero-ctas-${slide.id}`}>
+                          <Button
+                            size="lg"
+                            className={cn(
+                              "text-base px-8 h-14 rounded-full font-bold shadow-[0_0_20px_rgba(0,0,0,0.3)] transition-transform hover:scale-105",
+                              slide.theme === "orange" && "bg-orange-600 hover:bg-orange-700 text-white",
+                              slide.theme === "blue" && "bg-blue-600 hover:bg-blue-700 text-white",
+                              slide.theme === "purple" && "bg-purple-600 hover:bg-purple-700 text-white"
+                            )}
+                            data-testid={`button-hero-primary-${slide.id}`}
+                          >
+                            {slide.cta} <ArrowRight className="ml-2 h-5 w-5" />
+                          </Button>
+                          <Button
+                            size="lg"
+                            variant="outline"
+                            className="text-base h-14 rounded-full border-white/30 text-white hover:bg-white/10 backdrop-blur-sm"
+                            data-testid={`button-hero-secondary-${slide.id}`}
+                          >
+                            <PlayCircle className="mr-2 h-5 w-5" /> {slide.secondaryCta}
+                          </Button>
                         </div>
 
                         <div className="grid grid-cols-3 gap-2 mb-5" data-testid={`grid-hero-stats-${slide.id}`}>

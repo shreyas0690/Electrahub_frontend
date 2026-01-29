@@ -253,7 +253,22 @@ export function FeaturedProducts() {
                       <span className="text-sm text-muted-foreground line-through mr-2">{product.mrp}</span>
                       <span className="text-xl font-bold text-foreground">{product.price}</span>
                     </div>
-                    <Button size="icon" className="rounded-full h-10 w-10 shrink-0 shadow-sm">
+                    <Button
+                      size="icon"
+                      className="rounded-full h-10 w-10 shrink-0 shadow-sm"
+                      data-testid={`button-best-seller-add-${product.id}`}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        addItem({
+                          id: product.id,
+                          name: product.name,
+                          price: parsePrice(product.price),
+                          image: product.image,
+                          qty: 1,
+                          meta: { emi: product.emi, mrp: product.mrp },
+                        });
+                      }}
+                    >
                       <ShoppingCart className="h-4 w-4" />
                     </Button>
                   </div>

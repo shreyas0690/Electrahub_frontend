@@ -8,15 +8,15 @@ import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { ShoppingCart, Star, SlidersHorizontal } from "lucide-react";
 
-import imgTv55 from "@/assets/product-tv-55.jpg";
-import imgTv43 from "@/assets/product-tv-43.jpg";
-import imgTv65 from "@/assets/product-tv-65.jpg";
-import imgSb200 from "@/assets/product-soundbar-200.jpg";
-import imgSb450 from "@/assets/product-soundbar-450.jpg";
-import imgWm7 from "@/assets/product-wm-7kg.jpg";
-import imgWm9 from "@/assets/product-wm-9kg.jpg";
-import imgDs43 from "@/assets/product-standee-43.jpg";
-import imgDs55 from "@/assets/product-standee-55.jpg";
+import imgTv55 from "@/assets/product-tv-55.png";
+import imgTv43 from "@/assets/product-tv-43.png";
+import imgTv65 from "@/assets/product-tv-65.png";
+import imgSb200 from "@/assets/product-soundbar-200.png";
+import imgSb450 from "@/assets/product-soundbar-450.png";
+import imgWm7 from "@/assets/product-wm-7kg.png";
+import imgWm9 from "@/assets/product-wm-9kg.png";
+import imgDs43 from "@/assets/product-standee-43.png";
+import imgDs55 from "@/assets/product-standee-55.png";
 
 const categoryMeta: Record<string, { title: string; subtitle: string }> = {
   tvs: {

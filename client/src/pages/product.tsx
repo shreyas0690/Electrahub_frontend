@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Star, ShieldCheck, Lock, Truck, Wrench, Percent, ChevronLeft, ChevronRight } from "lucide-react";
+import { useCartStore } from "@/lib/cart-store";
 
 import imgTv55 from "@/assets/product-tv-55.png";
 import imgTv43 from "@/assets/product-tv-43.png";
@@ -261,6 +262,7 @@ export default function ProductPage() {
   const id = useProductId();
   const [qty, setQty] = useState(1);
   const [, setLocation] = useLocation();
+  const addItem = useCartStore((s) => s.addItem);
 
   const product = productDetails[id] ?? productDetails["tv-55-webos"];
   const [activeIndex, setActiveIndex] = useState(0);
@@ -401,7 +403,25 @@ export default function ProductPage() {
                 </div>
 
                 <div className="mt-6 flex flex-col sm:flex-row gap-3">
-                  <Button size="lg" className="h-12" data-testid="button-add-to-cart" onClick={() => setLocation("/cart")}>
+                  <Button
+                    size="lg"
+                    className="h-12"
+                    data-testid="button-add-to-cart"
+                    onClick={() => {
+                      addItem(
+                        {
+                          id: product.id,
+                          name: product.name,
+                          image: product.images[0] ?? activeImage,
+                          price: product.price,
+                          mrp: product.mrp,
+                          emi: product.emiplans?.[2]?.perMonth ? `${product.emiplans[2].perMonth}/mo` : undefined,
+                        },
+                        qty
+                      );
+                      setLocation("/cart");
+                    }}
+                  >
                     Add to Cart
                   </Button>
                   <Button size="lg" variant="outline" className="h-12" data-testid="button-check-emi" onClick={() => {}}>

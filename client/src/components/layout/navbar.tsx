@@ -1,12 +1,17 @@
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import { Search, ShoppingCart, User, Menu, Phone, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { useState } from "react";
+import { useCartStore } from "@/lib/cart-store";
+import { useMemo, useState } from "react";
 
 export function Navbar() {
+  const [, setLocation] = useLocation();
   const [isOpen, setIsOpen] = useState(false);
+
+  const items = useCartStore((s) => s.items);
+  const cartCount = useMemo(() => items.reduce((sum, i) => sum + i.qty, 0), [items]);
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -80,10 +85,19 @@ export function Navbar() {
             size="icon"
             className="relative"
             data-testid="button-cart"
-            onClick={() => (window.location.href = "/cart")}
+            onClick={() => setLocation("/cart")}
           >
             <ShoppingCart className="h-5 w-5" />
-            <span className="absolute top-1 right-1 h-2 w-2 rounded-full bg-primary ring-2 ring-background" />
+            {cartCount > 0 ? (
+              <span
+                className="absolute -top-1 -right-1 inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-primary px-1.5 text-[11px] font-bold text-primary-foreground ring-2 ring-background"
+                data-testid="badge-cart-count"
+              >
+                {cartCount > 9 ? "9+" : cartCount}
+              </span>
+            ) : (
+              <span className="absolute top-1 right-1 h-2 w-2 rounded-full bg-primary/40 ring-2 ring-background" />
+            )}
           </Button>
         </div>
       </div>

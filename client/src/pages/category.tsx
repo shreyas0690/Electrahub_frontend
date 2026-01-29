@@ -10,6 +10,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Slider } from "@/components/ui/slider";
 import { ShoppingCart, Star, SlidersHorizontal } from "lucide-react";
+import { useCartStore } from "@/lib/cart-store";
 
 import imgTv55 from "@/assets/product-tv-55.png";
 import imgTv43 from "@/assets/product-tv-43.png";
@@ -168,6 +169,7 @@ function useCategorySlug() {
 
 export default function CategoryPage() {
   const [, setLocation] = useLocation();
+  const addItem = useCartStore((s) => s.addItem);
   const slug = useCategorySlug();
   const meta = categoryMeta[slug] ?? categoryMeta.tvs;
   const allProducts = productsBySlug[slug] ?? productsBySlug.tvs;
@@ -398,7 +400,17 @@ export default function CategoryPage() {
                         size="icon"
                         className="rounded-full h-10 w-10 shrink-0"
                         data-testid={`button-add-cart-${p.id}`}
-                        onClick={() => setLocation("/cart")}
+                        onClick={() => {
+                          addItem({
+                            id: p.id,
+                            name: p.name,
+                            image: p.image,
+                            price: p.price,
+                            mrp: p.mrp,
+                            emi: p.emi,
+                          });
+                          setLocation("/cart");
+                        }}
                       >
                         <ShoppingCart className="h-4 w-4" />
                       </Button>

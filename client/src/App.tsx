@@ -9,6 +9,8 @@ import CategoryPage from "@/pages/category";
 import ProductPage from "@/pages/product";
 import CartPage from "@/pages/cart";
 import CheckoutPage from "@/pages/checkout";
+import LoginPage from "@/pages/login";
+import SignupPage from "@/pages/signup";
 
 function Router() {
   return (
@@ -18,6 +20,8 @@ function Router() {
       <Route path="/product" component={ProductPage} />
       <Route path="/cart" component={CartPage} />
       <Route path="/checkout" component={CheckoutPage} />
+      <Route path="/login" component={LoginPage} />
+      <Route path="/signup" component={SignupPage} />
       <Route component={NotFound} />
     </Switch>
   );

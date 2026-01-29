@@ -180,9 +180,11 @@ export function Navbar() {
               <Search className="h-5 w-5" />
             </Button>
 
-            <Button variant="ghost" size="icon" className="rounded-full" data-testid="button-account">
-              <User className="h-5 w-5" />
-            </Button>
+            <Link href="/login" data-testid="link-nav-login">
+              <Button variant="ghost" size="icon" className="rounded-full" data-testid="button-account">
+                <User className="h-5 w-5" />
+              </Button>
+            </Link>
 
             <Button
               variant="ghost"

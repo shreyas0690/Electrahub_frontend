@@ -6,6 +6,15 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { useToast } from "@/hooks/use-toast";
 import { useCartStore } from "@/lib/cart-store";
 import { Banknote, CheckCircle2, CreditCard, MapPin, ShieldCheck, Truck } from "lucide-react";
@@ -20,6 +29,7 @@ export default function CheckoutPage() {
   const clear = useCartStore((s: { clear: () => void }) => s.clear);
 
   const [step, setStep] = useState<"address" | "payment" | "review" | "success">("address");
+  const [isSuccessOpen, setIsSuccessOpen] = useState(false);
 
   const [contact, setContact] = useState({
     fullName: "",
@@ -308,8 +318,9 @@ export default function CheckoutPage() {
                           className="rounded-full"
                           data-testid="button-place-order"
                           onClick={() => {
-                            toast({ title: "Order placed (prototype)", description: "Order flow is ready. Payment gateway will be connected later." });
+                            toast({ title: "Order placed", description: "We’ll confirm your order details shortly." });
                             clear();
+                            setIsSuccessOpen(true);
                             setStep("success");
                           }}
                         >
@@ -320,6 +331,54 @@ export default function CheckoutPage() {
                   </div>
                 ) : null}
 
+                <AlertDialog open={isSuccessOpen} onOpenChange={setIsSuccessOpen}>
+                  <AlertDialogContent className="rounded-2xl">
+                    <AlertDialogHeader>
+                      <div className="mx-auto grid place-items-center h-14 w-14 rounded-2xl bg-green-50 border border-green-200" data-testid="icon-order-success">
+                        <CheckCircle2 className="h-7 w-7 text-green-700" />
+                      </div>
+                      <AlertDialogTitle className="text-center font-heading" data-testid="text-order-success-title">
+                        Order placed!
+                      </AlertDialogTitle>
+                      <AlertDialogDescription className="text-center" data-testid="text-order-success-subtitle">
+                        Your order is confirmed (prototype). We’ll share delivery & installation updates soon.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+
+                    <div className="rounded-xl border bg-muted/20 p-4" data-testid="card-order-success-details">
+                      <div className="flex items-center justify-between text-sm" data-testid="row-order-success-total">
+                        <span className="text-muted-foreground">Total paid</span>
+                        <span className="font-semibold">{formatINR(total)}</span>
+                      </div>
+                      <div className="mt-2 flex items-center justify-between text-sm" data-testid="row-order-success-payment">
+                        <span className="text-muted-foreground">Payment</span>
+                        <span className="font-semibold">{payment.method.toUpperCase()}</span>
+                      </div>
+                      <div className="mt-2 flex items-center justify-between text-sm" data-testid="row-order-success-eta">
+                        <span className="text-muted-foreground">Delivery</span>
+                        <span className="font-semibold">3–5 business days</span>
+                      </div>
+                    </div>
+
+                    <AlertDialogFooter className="sm:justify-center">
+                      <AlertDialogAction
+                        className="rounded-full"
+                        data-testid="button-order-success-home"
+                        onClick={() => setLocation("/")}
+                      >
+                        Back to Home
+                      </AlertDialogAction>
+                      <AlertDialogAction
+                        className="rounded-full"
+                        data-testid="button-order-success-shop"
+                        onClick={() => setLocation("/category?c=tvs")}
+                      >
+                        Continue Shopping
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
+
                 {step === "success" ? (
                   <div className="py-10 text-center" data-testid="section-checkout-success">
                     <div className="mx-auto grid place-items-center h-14 w-14 rounded-2xl bg-green-50 border border-green-200" data-testid="icon-checkout-success">
@@ -327,7 +386,7 @@ export default function CheckoutPage() {
                     </div>
                     <h2 className="mt-4 text-2xl font-heading font-bold" data-testid="text-success-title">Order placed!</h2>
                     <p className="mt-2 text-muted-foreground" data-testid="text-success-subtitle">
-                      This is a prototype checkout. Next we can connect real payments & order tracking.
+                      We’ve shown the confirmation modal above. You can continue shopping anytime.
                     </p>
                     <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
                       <Button className="rounded-full" data-testid="button-success-home" onClick={() => setLocation("/")}>Back to Home</Button>

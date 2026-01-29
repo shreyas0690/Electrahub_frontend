@@ -59,21 +59,25 @@ export function StoreLocator() {
               </div>
 
               <div className="mt-8 flex flex-wrap items-center gap-3" data-testid="group-store-actions">
-                <Button
-                  size="lg"
-                  className="rounded-full bg-white text-foreground hover:bg-white/90"
-                  data-testid="button-store-directions"
-                >
-                  Get Directions
-                </Button>
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="rounded-full border-white/25 text-white hover:bg-white/10"
-                  data-testid="button-store-dealer"
-                >
-                  Become a Dealer <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
+                <a href="/directions" data-testid="link-store-directions">
+                  <Button
+                    size="lg"
+                    className="rounded-full bg-white text-foreground hover:bg-white/90"
+                    data-testid="button-store-directions"
+                  >
+                    Get Directions
+                  </Button>
+                </a>
+                <a href="/dealer" data-testid="link-store-dealer">
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="rounded-full border-white/25 text-white hover:bg-white/10"
+                    data-testid="button-store-dealer"
+                  >
+                    Become a Dealer <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </a>
                 <div className="text-xs text-white/60" data-testid="text-store-address">
                   Unnamed Road, Akbarpur, Uttar Pradesh, 203001
                 </div>

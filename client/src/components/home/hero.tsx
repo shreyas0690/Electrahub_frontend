@@ -159,23 +159,6 @@ export function Hero() {
                         </div>
 
 
-                        <div className="grid grid-cols-3 gap-2 mb-5" data-testid={`grid-hero-stats-${slide.id}`}>
-                          {slide.stats.map((s, i) => (
-                            <div
-                              key={`${slide.id}-${i}`}
-                              className="rounded-2xl border border-white/10 bg-white/10 backdrop-blur-md px-3 py-2 shadow-[0_10px_30px_rgba(0,0,0,0.25)]"
-                              data-testid={`card-hero-stat-${slide.id}-${i}`}
-                            >
-                              <div className="text-[11px] uppercase tracking-wider text-white/70" data-testid={`text-hero-stat-label-${slide.id}-${i}`}>
-                                {s.label}
-                              </div>
-                              <div className="text-sm font-semibold text-white" data-testid={`text-hero-stat-value-${slide.id}-${i}`}>
-                                {s.value}
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-
                         <h1 className="text-5xl md:text-7xl font-heading font-bold leading-tight text-white mb-6 drop-shadow-lg">
                           {slide.title.replace(slide.highlight, "")}
                           <span className={cn(

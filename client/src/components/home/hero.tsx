@@ -123,7 +123,11 @@ export function Hero() {
                 <img
                   src={slide.image}
                   alt={slide.title}
-                  className="w-full h-full object-cover transition-transform duration-10000 ease-linear scale-105 animate-slow-zoom"
+                  className={cn(
+                    "w-full h-full object-cover transition-transform duration-10000 ease-linear scale-105 animate-slow-zoom",
+                    current === index ? "opacity-100" : "opacity-0"
+                  )}
+                  data-testid={`img-hero-bg-${slide.id}`}
                 />
                 {/* Advanced Gradient Overlay */}
                 <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent" />

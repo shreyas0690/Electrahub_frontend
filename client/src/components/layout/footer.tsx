@@ -185,7 +185,7 @@ export function Footer() {
                       <Phone className="h-4 w-4" />
                     </div>
                     <div>
-                      <div className="font-semibold" data-testid="text-footer-phone">+91 8477819222</div>
+                      <div className="font-semibold" data-testid="text-footer-phone">+91 8307922636</div>
                       <div className="text-xs text-muted-foreground" data-testid="text-footer-phone-sub">Call / WhatsApp</div>
                     </div>
                   </div>

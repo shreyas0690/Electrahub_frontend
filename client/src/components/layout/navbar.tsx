@@ -26,7 +26,7 @@ export function Navbar() {
         <div className="container mx-auto px-4 py-2 flex items-center justify-between text-xs">
           <div className="flex items-center gap-4">
             <span className="inline-flex items-center gap-1.5 opacity-90" data-testid="text-navbar-support">
-              <Phone className="h-3.5 w-3.5" /> +91 8477819222
+              <Phone className="h-3.5 w-3.5" /> +91 8307922636
             </span>
           </div>
           <div className="flex items-center gap-2" data-testid="group-navbar-trust">
